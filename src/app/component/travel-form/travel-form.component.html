@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" [style.width.px]="327">
+        <mat-label>בחר מדינה</mat-label>
+        <mat-select formControlName="state">
+            <mat-option *ngFor="let state of states" [value]="state">
+                {{state.name}}
+            </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="submitted && f.state.errors && f.state.errors.required">חובה לבחור שם מדינה</mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="fill" [style.width.px]="327">
+        <mat-label>בחר טווח תאריכים</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate formControlName="startDate" placeholder="מתאריך">
+            <input matEndDate formControlName="endDate" placeholder="עד תאריך">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="submitted && f.startDate.errors && f.startDate.errors.required">חובה לבחור תאריך תחילה
+        </mat-error>
+        <mat-error *ngIf="submitted && f.endDate.errors && f.endDate.errors.required">חובה לבחור תאריך סיום</mat-error>
+        <mat-error *ngIf="f.startDate.hasError('matStartDateInvalid')">תאריך תחילה לא חוקי</mat-error>
+        <mat-error *ngIf="f.endDate.hasError('matEndDateInvalid')">תאריך סיום לא חוקי</mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field class="fill" [style.width.px]="327">
+        <mat-label>הערות</mat-label>
+        <textarea matInput formControlName="note" placeholder="כתוב את ההערה שלך כאן..."></textarea>
+    </mat-form-field>
+
+    <br>
+
+    <button mat-stroked-button type="submit" color="primary">שלח</button>
+</form>
